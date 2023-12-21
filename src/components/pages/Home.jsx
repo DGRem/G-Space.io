@@ -1,5 +1,6 @@
 import NavBar from "../utilities/NavBar"
 import Background from '../assets/videos/bg-video.mp4'
+import Booking from "./Booking"
 
 
 export default function Home(){
@@ -51,6 +52,7 @@ export default function Home(){
                             </div>
                         </div>
                     </div>
+                    <Booking />
                 </section>
             </main>
         </>
