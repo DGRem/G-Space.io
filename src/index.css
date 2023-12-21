@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Bayon&family=Black+Ops+One&family=Bruno+Ace&family=Bruno+Ace+SC&family=Titillium+Web&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+    * {
+        margin: 0;
+        padding: 0;
+    }
+}
