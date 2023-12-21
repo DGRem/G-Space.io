@@ -60,7 +60,7 @@ export default function NavBar () {
         <>
             <nav className="absolute z-10 px-4 py-4 flex justify-center items-center backdrop-blur-sm bg-transparent border-b-[1px] border-b-slate-300 w-full">
                 <div className="container flex justify-between">
-                    <a className="text-3xl text-white font-BrunoSC font-bold w-10" href="#">
+                    <a className="text-3xl text-white font-BrunoSC w-10" href="#">
                         GSPACE
                     </a>
                     <div className="lg:hidden">
