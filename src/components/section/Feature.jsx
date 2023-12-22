@@ -5,7 +5,7 @@
 export default function Feature() {
     return (
         <>
-            <div className="flex-col w-full justify-center text-center p-40 bg-[url('./src/components/assets/Images/bg-feat.jpg')]">
+            <div id="about" className="flex-col w-full justify-center text-center p-40 bg-[url('./src/components/assets/Images/bg-feat.jpg')]">
                 <div className="text-4xl font-Bruno font-bold text-green drop-shadow-2xl mb-20">Discover the GSpace Advantage: Your Premier Gaming Experience</div>
                 <div className="flex w-full justify-center">
                     <div className="flex justify-around container">

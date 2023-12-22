@@ -55,6 +55,24 @@ export default function NavBar () {
             }
         };
     }, []);
+        // Smooth Scrolling
+        const scrollToAbout = (event) => {
+            event.preventDefault();
+            const aboutSection = document.getElementById('about');
+            if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        const scrollToBooking = (event) => {
+            event.preventDefault();
+            const aboutSection = document.getElementById('booking');
+            if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+
 
     return (
         <>
@@ -73,8 +91,8 @@ export default function NavBar () {
                     </div>
                     <div className="lg:flex hidden">
                         <ul className="flex items-center lg:space-x-10 ml-[31rem] text-white">
-                            <li className="transition-transform transform hover:scale-110"><a href="">About Us</a></li>
-                            <li className="transition-transform transform hover:scale-110"><a href="">Book Now!</a></li>
+                            <li className="transition-transform transform hover:scale-110"><a href="#about" onClick={scrollToAbout}>About Us</a></li>
+                            <li className="transition-transform transform hover:scale-110"><a href="#booking" onClick={scrollToBooking}>Book Now!</a></li>
                             <li className="transition-transform transform hover:scale-110"><a href="">Contact Us</a></li>
                             <li className="transition-transform transform hover:scale-110"><a href="">FAQ&apos;s</a></li>
                         </ul>
@@ -98,7 +116,7 @@ export default function NavBar () {
                     </div>
                     <div>
                         <ul>
-                        <li className="transition-transform transform hover:scale-110"><a href="">About Us</a></li>
+                        <li className="transition-transform transform hover:scale-110"><a href="#about" onClick={scrollToAbout}>About Us</a></li>
                         <li className="transition-transform transform hover:scale-110"><a href="">Book Now!</a></li>
                         <li className="transition-transform transform hover:scale-110"><a href="">Reviews</a></li>
                         <li className="transition-transform transform hover:scale-110"><a href="">Contact Us</a></li>
@@ -107,8 +125,8 @@ export default function NavBar () {
                     </div>
                     <div className="mt-auto">
                         <div className="pt-6">
-                            <a className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded " href="#">Sign in</a>
-                            <a className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded" href="#">Sign Up</a>
+                            <Link className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded " to="/login">Log in</Link>
+                            <Link className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded" to="/register">Sign Up</Link>
                         </div>
                         <p className="my-4 text-xs text-center text-white">
                             <span>Copyright © 2021</span>

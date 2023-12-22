@@ -12,7 +12,7 @@ const routes = [
         element: <Register />
     },
     {
-        path: "/",
+        path: "/*",
         element: <Home />
     },
 ];
