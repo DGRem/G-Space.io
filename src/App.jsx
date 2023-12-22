@@ -1,22 +1,20 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css'
-import Home from "./components/layout/Home";
-import Login from "./components/utilities/Auth/Login";
-import Register from "./components/utilities/Auth/Register";
+import routes from "./routes";
+import { Routes, Route } from "react-router-dom";
 
-function App() {
-
+const App = () => {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} index />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
-}
+    <div>
+      <Routes>
+        {
+          routes.map((route, index) => {
+            return (
+              <Route key={index} path={route.path} element={route.element} exact />
+            )
+          })
+        }
+      </Routes>
+    </div>
+  );
+};
 
-export default App
+export default App;
