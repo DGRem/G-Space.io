@@ -1,168 +1,190 @@
-import { useState } from 'react';
-import ConfirmBookingModal from '../utilities/Confirmation';
-import Pic1 from '../assets/images/arcade.jpg';
-import Pic2 from '../assets/images/console.jpg';
-import Pic3 from '../assets/images/desktop.jpg';
+import React, { useState } from 'react';
+import Modal from 'react-modal';
+import Arcade from '../assets/images/arcade.jpg'
+import Console from '../assets/images/console.jpg'
+import Desktop from '../assets/images/desktop.jpg'
 
 const RoomDetails = {
   arcade: {
-    image: Pic1,
-    description: 'Welcome to the Nexus of Nostalgia, the Arcade Room! Immerse yourself in a symphony of electronic symphonies and pixelated dreams. From the hypnotic glow of classic CRT monitors to the click-clack of arcade buttons, this room is a time capsule of gaming evolution. Unleash your inner pixel warrior as you navigate through mazes, dodge virtual enemies, and conquer high scores that echo through the corridors of gaming history. Get ready to level up your reality, where every token is a key to unlocking memories and every joystick is a magic wand in the hands of a digital sorcerer. Step inside, Player One, and let the adventure begin!',
-    price: '₱1,000 ',
+    name: 'Arcade Room',
+    image: Arcade,
+    inclusions: [
+      'Diverse Game Selection',
+      'Comfortable Seating Arrangements',
+      'High-Qualityy Audio-Visual Systems',
+      'Well-Maintained Arcade Machines',
+      'Food Allowed in the Gaming Area',
+    ],
   },
   console: {
-    image: Pic2,
-    description: "Welcome to the Console Citadel, where pixels meet power! Immerse yourself in the sleek aesthetics and high-tech prowess of gaming consoles from across the ages. From the iconic hum of loading screens to the satisfying click of a controller, this room is a haven for console enthusiasts. Unleash your inner adventurer as you explore vast digital landscapes, challenge legendary bosses, and forge unforgettable gaming moments. Get ready to level up your gaming experience, where every button press is a step towards victory and every console is a portal to infinite worlds. Grab your controller, Player Two, and let the gaming saga unfold!",
-    price: '₱1,500',
+    name: 'Console Room',
+    image: Console,
+    inclusions: [
+      'Variety of Gaming Consoles (e.g., PlayStation, Xbox, Nintendo)',
+      'Comfortable Seating with Gaming Chairs',
+      'High-Resolution Display Screens for Each Console',
+      'Access to a Wide Range of Popular Games',
+      'Food Allowed in the Gaming Area',
+    ],
   },
   desktop: {
-    image: Pic3,
-    description: "Welcome to the Binary Battleground, the Desktop Gaming Room! Here, the hum of cooling fans harmonizes with the click-clack of mechanical keyboards, creating a symphony of digital conquest. Immerse yourself in the world of high-performance rigs, where graphics are crystal clear, and framerates are as smooth as a perfectly executed headshot. Unleash your strategic genius as you command armies, conquer galaxies, and embark on epic quests. Get ready to level up your gaming rig, where every pixel is a battlefield and every keystroke is a tactical maneuver. Power up your gaming throne, Player Zero, and let the desktop odyssey commence!",
-    price: '₱2,000',
+    name: 'Desktop Gaming Room',
+    image: Desktop,
+    inclusions: [
+      'High-Performance Gaming PCs with Latest Specifications',
+      'Ergonomic Gaming Chairs and Adjustable Desks',
+      'Dual or Multiple Monitors for Enhanced Gaming Experience',
+      'High-Speed Internet Connection for Online Gaming',
+      'Food Allowed in the Gaming Area',
+    ],
   },
 };
 
-export default function Booking() {
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]); // Set to today's date by default
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
+const Booking = () => {
   const [selectedRoom, setSelectedRoom] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+  const [confirmationCode, setConfirmationCode] = useState('');
   const [isModalOpen, setModalOpen] = useState(false);
+
+  // State for the date validation modal
+  const [isDateValidationModalOpen, setDateValidationModalOpen] = useState(false);
+
+  const handleRoomChange = (room) => {
+    setSelectedRoom(room);
+  };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  const handleTimeSlotChange = (timeSlot) => {
-    setSelectedTimeSlot(timeSlot);
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
   };
 
-  const handleRoomChange = (roomType) => {
-    setSelectedRoom(roomType);
+  const generateConfirmationCode = () => {
+    // Generate a random confirmation code (this is just a placeholder)
+    const code = Math.random().toString(36).substr(2, 6).toUpperCase();
+    setConfirmationCode(code);
   };
 
-  const isDateAvailable = (date) => {
-    const currentDate = new Date();
-    const selectedDate = new Date(date);
-    return selectedDate >= currentDate; 
+  const handleConfirmReservation = () => {
+    if (selectedRoom) {
+      // Check if the selected date is not earlier than the current date
+      const currentDate = new Date().toISOString().split('T')[0];
+      if (selectedDate < currentDate) {
+        setDateValidationModalOpen(true);
+        return;
+      }
+
+      generateConfirmationCode();
+      setModalOpen(true);
+    }
   };
 
-  const closeBookingModal = () => {
+  const closeModal = () => {
     setModalOpen(false);
+    setDateValidationModalOpen(false);
   };
-
-  const timeSlots = ['10:00 AM', '12:00 PM', '2:00 PM', '4:00 PM', '6:00 PM', '8:00 PM', '10:00 PM', '12:00 AM'];
 
   return (
     <>
-      <main>
-        <div className="container flex mx-auto p-20">
-            {/* Left Column */}
-            <div className="w-1/2 pr-4">
-            <div className="booking-title">
-                <h1 className="text-green font-Bruno text-2xl">Book a Gaming Room</h1>
-            </div>
-            {/* Date Selector */}
-            <div className="mb-2 p-2">
-                <label className="block text-md text-customDarkPurple font-semibold mb-2">Select Date:</label>
-                <input
-                type="date"
-                onChange={(e) => handleDateChange(e.target.value)}
-                value={selectedDate}
-                className="border rounded text-black px-3 py-2 w-full"
-                required
-                />
-            </div>
-
-            {/* Time Slot Selector */}
-            <div className="mb-2 p-2">
-                <label className="block text-md text-customDarkPurple font-semibold mb-2">Select Time Slot:</label>
-                <select
-                onChange={(e) => handleTimeSlotChange(e.target.value)}
-                value={selectedTimeSlot}
-                className="border rounded text-black px-3 py-2 w-full"
-                required
-                >
-                <option value="" disabled hidden>Select Time Slot</option>
-                {timeSlots.map((slot) => (
-                    <option key={slot} value={slot}>{slot}</option>
+      <main className='flex justify-center items-center h-96 my-20'>
+        <div className='container flex justify-evenly p-10 border-l-8 border-l-green border-2 border-gray rounded-lg drop-shadow-md'>
+          <div className='w-1/4 p-8'>
+            {/* Room Selection */}
+            <div className='mb-4 flex justify-around'>
+              <label className='text-xl font-Titilium'>Select Room:</label>
+              <select className='w-1/2' onChange={(e) => handleRoomChange(e.target.value)} value={selectedRoom}>
+                <option value="" disabled>Select Room</option>
+                {Object.keys(RoomDetails).map((room) => (
+                  <option key={room} value={room}>
+                    {RoomDetails[room].name}
+                  </option>
                 ))}
-                </select>
+              </select>
             </div>
 
-            {/* Room Type Selector */}
-            <div className="mb-2 p-2">
-                <label className="block text-md text-customDarkPurple font-semibold mb-2">Select Room Type:</label>
-                <select
-                onChange={(e) => handleRoomChange(e.target.value)}
-                value={selectedRoom}
-                className="border rounded text-black px-3 py-2 w-full"
-                required
-                >
-                <option value="" disabled hidden>Select Room Type</option>
-                <option value="arcade">Arcade Room</option>
-                <option value="console">Console Room</option>
-                <option value="desktop">Desktop Gaming Room</option>
-                </select>
+            {/* Date Selection */}
+            <div className='mb-4 flex justify-around'>
+              <label className='text-xl font-Titilium' >Select Date:</label>
+              <input className='w-1/2' type="date" onChange={(e) => handleDateChange(e.target.value)} value={selectedDate} />
             </div>
 
-            {/* Booking Confirmation Section */}
-            {selectedDate && selectedRoom && !isModalOpen && (
-                <div className="mb-4">
-                <h1 className="booking-title text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-customPink via-customBlue to-customBlue">Confirm Booking</h1>
-                <p className="mb-4"> <span className='text-customDarkPurple mr-2'>Date:</span>{selectedDate}</p>
-                <p className="mb-4 "><span className='text-customDarkPurple mr-2'>Time Slot:</span> {selectedTimeSlot}</p>
-                <p className="mb-4 "><span className='text-customDarkPurple mr-2'>Room Type:</span> {selectedRoom}</p>
-                {isDateAvailable(selectedDate) ? (
-                    <>
-                    <button
-                        onClick={() => setModalOpen(true)}
-                        className=""
-                    >
-                        Reserve Now
-                    </button>
-                    </>
-                ) : (
-                    <p className="text-red-500">Selected date is not available for booking.</p>
-                )}
-                </div>
+            {/* Time Selection */}
+            <div className='mb-20 flex justify-around'>
+              <label className='text-xl font-Titilium' >Select Time:</label>
+              <input className='w-1/2' type="time" onChange={(e) => handleTimeChange(e.target.value)} value={selectedTime} />
+            </div>
+
+            {/* Confirm Reservation Button */}
+          <div className='flex justify-center'>
+            <button className='w-full py-2 bg-green rounded-lg drop-shadow-md hover:text-white hover:animate-pulse' onClick={handleConfirmReservation}>Confirm Reservation</button>
+          </div>
+          </div>
+          <div className='w-1/4 p-8'>
+            {/* Room Details */}
+            {selectedRoom && RoomDetails[selectedRoom] && (
+              <div className='mb-4'>
+                <h3 className='text-xl text-green font-Bruno mb-4'>{RoomDetails[selectedRoom].name}</h3>
+                <p>Inclusions:</p>
+                <ul className='pl-4'>
+                  {RoomDetails[selectedRoom].inclusions.map((item, index) => (
+                    <li key={index} className='list-disc'>{item}</li>
+                  ))}
+                </ul>
+              </div>
             )}
-            </div>
-
-            {/* Right Column */}
-            <div className="w-1/2 pl-4">
-
+          </div>
+          <div className='w-auto p-8'>
             {/* Room Preview */}
             {selectedRoom && RoomDetails[selectedRoom] && (
-                <div className="mb-4 border rounded-md">
-                <h1 className="booking-title text-2xl font-bold ml-5 text-transparent bg-clip-text bg-gradient-to-r from-customPink via-customBlue to-customBlue">Room Preview</h1>
-
-                <img
-                    src={RoomDetails[selectedRoom].image}
-                    alt={`${selectedRoom} Room`}
-                    className="w-full h-auto rounded p-5"
-                />
-                <p className="p-4">{RoomDetails[selectedRoom].description}</p>
-                <p className="p-4">{RoomDetails[selectedRoom].price}</p>
-                </div>
+              <div className='mb-4'>
+                <img className='rounded-md' src={RoomDetails[selectedRoom].image} alt={RoomDetails[selectedRoom].name} style={{ maxWidth: '600px', maxHeight: '300px' }} />
+              </div>
             )}
+          </div>
+
+          {/* Date Validation Modal */}
+          <Modal
+            isOpen={isDateValidationModalOpen}
+            onRequestClose={() => setDateValidationModalOpen(false)}
+            className="w-1/4 h-20 mx-auto mt-80 p-4 text-center"
+          >
+            <div className='p-10 bg-green rounded-md w-auto'>
+              <h2 className="text-lg text-red font-Bruno mb-6">Invalid Date Selection</h2>
+              <p className="text-white font-Titilium">Please select the current date or a later date for the reservation.</p>
+              <div className='flex justify-center mt-6'>
+                <button className="bg-blue-500 bg-white text-green px-8 py-2 rounded font-Titilium" onClick={() => setDateValidationModalOpen(false)}>
+                Close
+                </button>
+              </div>
             </div>
+          </Modal>
+
+
+
+
+
+
+          {/* Reservation Confirmation Modal */}
+          <Modal isOpen={isModalOpen} onRequestClose={closeModal} className="w-1/4 h-20 mx-auto mt-80 p-4">
+            <div className='p-10 bg-green rounded-md w-auto'>
+              <h2 className="text-lg text-red drop-shadow-lg font-Bruno mb-6 text-center">Reservation Confirmed!</h2>
+              <p className='text-white font-Titilium'>Room: {RoomDetails[selectedRoom]?.name}</p>
+              <p className='text-white font-Titilium'>Date: {selectedDate}</p>
+              <p className='text-white font-Titilium'>Time: {selectedTime}</p>
+              <p className='text-white font-Titilium'>Confirmation Code: {confirmationCode}</p>
+              <p className='text-red italic text-sm text-center mt-6'>KINDLY SAVE THE RESERVATION CODE.</p>
+              <div className='flex justify-center mt-6'>
+                <button className="bg-blue-500 bg-white text-green px-8 py-2 rounded font-Titilium" onClick={closeModal}>Close</button>
+              </div>
+            </div>
+          </Modal>
         </div>
       </main>
-
-      {isModalOpen && (
-        <ConfirmBookingModal
-          isOpen={isModalOpen}
-          onClose={closeBookingModal}
-          onConfirmBooking={() => {
-            closeBookingModal();
-          }}
-          bookingDetails={{
-            date: selectedDate,
-            time: selectedTimeSlot,
-            roomType: selectedRoom,
-          }}
-        />
-      )}
     </>
   );
-}
+};
+
+export default Booking;
