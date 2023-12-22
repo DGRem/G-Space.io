@@ -1,7 +1,7 @@
 import NavBar from "../utilities/NavBar"
 import Background from '../assets/videos/bg-video.mp4'
-import Booking from "./Booking"
-import Feature from "./Feature"
+import Booking from "../section/Booking"
+import Feature from "../section/Feature"
 
 
 export default function Home(){
