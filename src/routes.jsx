@@ -4,8 +4,8 @@ import Register from "./components/utilities/Auth/Register";
 
 const routes = [
     {
-        path: "/home",
-        element: <Home />
+        path: "/login",
+        element: <Login />
     },
     {
         path: "/register",
@@ -13,7 +13,7 @@ const routes = [
     },
     {
         path: "/*",
-        element: <Login />
+        element: <Home />
     },
 ];
 
