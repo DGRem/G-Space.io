@@ -89,7 +89,7 @@ const Booking = () => {
 
   return (
     <>
-      <main className='flex justify-center items-center h-96 my-20'>
+      <main id="booking" className='flex justify-center items-center h-96 my-20'>
         <div className='container flex justify-evenly p-10 border-l-8 border-l-green border-2 border-gray rounded-lg drop-shadow-md'>
           <div className='w-1/4 p-8'>
             {/* Room Selection */}

@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useEffect } from 'react';
+import http from "./http/http";
 
 
 export default function NavBar () {
@@ -64,13 +65,31 @@ export default function NavBar () {
             }
         };
 
-        const scrollToBooking = (event) => {
+        const scrollToRoom = (event) => {
             event.preventDefault();
             const aboutSection = document.getElementById('rooms');
             if (aboutSection) {
             aboutSection.scrollIntoView({ behavior: 'smooth' });
             }
         };
+
+        //sign out
+        const navigate = useNavigate();
+            async function logout() {
+                try {
+                const api = http({
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                });
+
+                const response = await api.post("/logout");
+                localStorage.clear();
+                console.log(response);
+                navigate("/login");
+                } catch (e) {
+                console.log(e);
+                }
+            }
+
 
 
 
@@ -92,13 +111,12 @@ export default function NavBar () {
                     <div className="lg:flex hidden">
                         <ul className="flex items-center lg:space-x-10 ml-[31rem] text-white">
                             <li className="transition-transform transform hover:scale-110"><a href="#about" onClick={scrollToAbout}>About Us</a></li>
-                            <li className="transition-transform transform hover:scale-110"><a href="#rooms" onClick={scrollToBooking}>Rooms</a></li>
+                            <li className="transition-transform transform hover:scale-110"><a href="#rooms" onClick={scrollToRoom}>Rooms</a></li>
                             <li className="transition-transform transform hover:scale-110"><a href="">Contact Us</a></li>
                             <li className="transition-transform transform hover:scale-110"><a href="">FAQ&apos;s</a></li>
                         </ul>
                     </div>
-                    <Link className="hidden lg:inline-block lg:ml-auto lg:mr-3 w-[90px] text-center bg-green px-4 py-1 rounded-lg drop-shadow-md transition-transform transform hover:scale-110" to="/login">Log In</Link>
-                    <Link className="hidden lg:inline-block w-[90px] text-center bg-white text-red px-4 py-1 rounded-lg drop-shadow-md transition-transform transform hover:scale-110" to="/register">Register</Link>
+                    <a className="hidden cursor-pointer lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-white font-bold  rounded-xl transition duration-200 bg-gradient-to-r from-customPurple to-customPink" onClick={logout}>Sign Out</a>
                 </div>
             </nav>
             <div className="navbar-menu relative z-50 hidden">
@@ -125,8 +143,7 @@ export default function NavBar () {
                     </div>
                     <div className="mt-auto">
                         <div className="pt-6">
-                            <Link className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded " to="/login">Log in</Link>
-                            <Link className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded" to="/register">Sign Up</Link>
+                            <a className="hidden cursor-pointer lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-white font-bold  rounded-xl transition duration-200 bg-gradient-to-r from-customPurple to-customPink" onClick={logout}>Sign Out</a>
                         </div>
                         <p className="my-4 text-xs text-center text-white">
                             <span>Copyright © 2021</span>
