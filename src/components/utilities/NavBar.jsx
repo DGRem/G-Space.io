@@ -73,6 +73,22 @@ export default function NavBar () {
             }
         };
 
+        const scrollToContact = (event) => {
+            event.preventDefault();
+            const aboutSection = document.getElementById('contact');
+            if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        const scrollToFaq = (event) => {
+            event.preventDefault();
+            const aboutSection = document.getElementById('faq');
+            if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
         //sign out
         const navigate = useNavigate();
             async function logout() {
@@ -112,11 +128,11 @@ export default function NavBar () {
                         <ul className="flex items-center lg:space-x-10 ml-[31rem] text-white">
                             <li className="transition-transform transform hover:scale-110"><a href="#about" onClick={scrollToAbout}>About Us</a></li>
                             <li className="transition-transform transform hover:scale-110"><a href="#rooms" onClick={scrollToRoom}>Rooms</a></li>
-                            <li className="transition-transform transform hover:scale-110"><a href="">Contact Us</a></li>
-                            <li className="transition-transform transform hover:scale-110"><a href="">FAQ&apos;s</a></li>
+                            <li className="transition-transform transform hover:scale-110"><a href="#contact" onClick={scrollToContact}>Contact Us</a></li>
+                            <li className="transition-transform transform hover:scale-110"><a href="#faq" onClick={scrollToFaq}>FAQ&apos;s</a></li>
                         </ul>
                     </div>
-                    <a className="hidden cursor-pointer lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-white font-bold  rounded-xl transition duration-200 bg-gradient-to-r from-customPurple to-customPink" onClick={logout}>Sign Out</a>
+                    <a className="hidden cursor-pointer lg:inline-block lg:ml-auto lg:mr-3 py-2 px-4 bg-white text-green rounded-md transition-transform hover:scale-110" onClick={logout}>Sign Out</a>
                 </div>
             </nav>
             <div className="navbar-menu relative z-50 hidden">
@@ -135,10 +151,9 @@ export default function NavBar () {
                     <div>
                         <ul>
                         <li className="transition-transform transform hover:scale-110"><a href="#about" onClick={scrollToAbout}>About Us</a></li>
-                        <li className="transition-transform transform hover:scale-110"><a href="">Book Now!</a></li>
-                        <li className="transition-transform transform hover:scale-110"><a href="">Reviews</a></li>
-                        <li className="transition-transform transform hover:scale-110"><a href="">Contact Us</a></li>
-                        <li className="transition-transform transform hover:scale-110"><a href="">FAQ&apos;s</a></li>
+                        <li className="transition-transform transform hover:scale-110"><a href="#booking" onClick={scrollToRoom}>Rooms</a></li>
+                        <li className="transition-transform transform hover:scale-110"><a href="#contact" onClick={scrollToContact}>Contact Us</a></li>
+                        <li className="transition-transform transform hover:scale-110"><a href="#faq" onClick={scrollToFaq}>FAQ&apos;s</a></li>
                         </ul>
                     </div>
                     <div className="mt-auto">

@@ -4,6 +4,8 @@ import Rooms from "../section/Rooms"
 import Feature from "../section/Feature"
 import Booking from "../section/Booking"
 import Footer from "../section/Footer"
+import Faq from "../section/Faq"
+import Sponsor from "../section/Sponsor"
 
 
 export default function Home(){
@@ -37,6 +39,10 @@ export default function Home(){
                     <Rooms />
                     {/*Booking Section*/}
                     <Booking />
+                    {/*Sponsor Section*/}
+                    <Sponsor />
+                    {/*FAQ Section*/}
+                    <Faq />
                     {/*Footer Section */}
                     <Footer />
                 </section>

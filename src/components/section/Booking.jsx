@@ -92,6 +92,7 @@ const Booking = () => {
       <main id="booking" className='flex justify-center items-center h-96 my-20'>
         <div className='container flex justify-evenly p-10 border-l-8 border-l-green border-2 border-gray rounded-lg drop-shadow-md'>
           <div className='w-1/4 p-8'>
+            <h1 className='text-2xl font-Bruno text-green mb-6'>Reserve Your Hub</h1>
             {/* Room Selection */}
             <div className='mb-4 flex justify-around'>
               <label className='text-xl font-Titilium'>Select Room:</label>
@@ -118,9 +119,9 @@ const Booking = () => {
             </div>
 
             {/* Confirm Reservation Button */}
-          <div className='flex justify-center'>
-            <button className='w-full py-2 bg-green rounded-lg drop-shadow-md hover:text-white hover:animate-pulse' onClick={handleConfirmReservation}>Confirm Reservation</button>
-          </div>
+            <div className='flex justify-center'>
+              <button className='w-full py-2 bg-green rounded-lg drop-shadow-md hover:text-white hover:animate-pulse' onClick={handleConfirmReservation}>Confirm Reservation</button>
+            </div>
           </div>
           <div className='w-1/4 p-8'>
             {/* Room Details */}
