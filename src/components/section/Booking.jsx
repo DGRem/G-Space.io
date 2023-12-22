@@ -1,18 +1,168 @@
+import { useState } from 'react';
+import ConfirmBookingModal from '../utilities/Confirmation';
+import Pic1 from '../assets/images/arcade.jpg';
+import Pic2 from '../assets/images/console.jpg';
+import Pic3 from '../assets/images/desktop.jpg';
 
-
-
+const RoomDetails = {
+  arcade: {
+    image: Pic1,
+    description: 'Welcome to the Nexus of Nostalgia, the Arcade Room! Immerse yourself in a symphony of electronic symphonies and pixelated dreams. From the hypnotic glow of classic CRT monitors to the click-clack of arcade buttons, this room is a time capsule of gaming evolution. Unleash your inner pixel warrior as you navigate through mazes, dodge virtual enemies, and conquer high scores that echo through the corridors of gaming history. Get ready to level up your reality, where every token is a key to unlocking memories and every joystick is a magic wand in the hands of a digital sorcerer. Step inside, Player One, and let the adventure begin!',
+    price: '₱1,000 ',
+  },
+  console: {
+    image: Pic2,
+    description: "Welcome to the Console Citadel, where pixels meet power! Immerse yourself in the sleek aesthetics and high-tech prowess of gaming consoles from across the ages. From the iconic hum of loading screens to the satisfying click of a controller, this room is a haven for console enthusiasts. Unleash your inner adventurer as you explore vast digital landscapes, challenge legendary bosses, and forge unforgettable gaming moments. Get ready to level up your gaming experience, where every button press is a step towards victory and every console is a portal to infinite worlds. Grab your controller, Player Two, and let the gaming saga unfold!",
+    price: '₱1,500',
+  },
+  desktop: {
+    image: Pic3,
+    description: "Welcome to the Binary Battleground, the Desktop Gaming Room! Here, the hum of cooling fans harmonizes with the click-clack of mechanical keyboards, creating a symphony of digital conquest. Immerse yourself in the world of high-performance rigs, where graphics are crystal clear, and framerates are as smooth as a perfectly executed headshot. Unleash your strategic genius as you command armies, conquer galaxies, and embark on epic quests. Get ready to level up your gaming rig, where every pixel is a battlefield and every keystroke is a tactical maneuver. Power up your gaming throne, Player Zero, and let the desktop odyssey commence!",
+    price: '₱2,000',
+  },
+};
 
 export default function Booking() {
-    return (
-        <>
-        <div id="booking" className="w-full bg-[url('./src/components/assets/Images/parallax.jpg')] bg-fixed bg-no-repeat h-screen
-                    flex items-center justify-center
-                    text-[22px] font-Ops text-accent text-shadow text-white
-                    tablet:text-[40px]
-                    desktop:text-[70px]"
-        >
-            BOOKING SECTION!
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]); // Set to today's date by default
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
+  const [selectedRoom, setSelectedRoom] = useState('');
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  const handleTimeSlotChange = (timeSlot) => {
+    setSelectedTimeSlot(timeSlot);
+  };
+
+  const handleRoomChange = (roomType) => {
+    setSelectedRoom(roomType);
+  };
+
+  const isDateAvailable = (date) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(date);
+    return selectedDate >= currentDate; 
+  };
+
+  const closeBookingModal = () => {
+    setModalOpen(false);
+  };
+
+  const timeSlots = ['10:00 AM', '12:00 PM', '2:00 PM', '4:00 PM', '6:00 PM', '8:00 PM', '10:00 PM', '12:00 AM'];
+
+  return (
+    <>
+      <main>
+        <div className="container flex mx-auto p-20">
+            {/* Left Column */}
+            <div className="w-1/2 pr-4">
+            <div className="booking-title">
+                <h1 className="text-green font-Bruno text-2xl">Book a Gaming Room</h1>
+            </div>
+            {/* Date Selector */}
+            <div className="mb-2 p-2">
+                <label className="block text-md text-customDarkPurple font-semibold mb-2">Select Date:</label>
+                <input
+                type="date"
+                onChange={(e) => handleDateChange(e.target.value)}
+                value={selectedDate}
+                className="border rounded text-black px-3 py-2 w-full"
+                required
+                />
+            </div>
+
+            {/* Time Slot Selector */}
+            <div className="mb-2 p-2">
+                <label className="block text-md text-customDarkPurple font-semibold mb-2">Select Time Slot:</label>
+                <select
+                onChange={(e) => handleTimeSlotChange(e.target.value)}
+                value={selectedTimeSlot}
+                className="border rounded text-black px-3 py-2 w-full"
+                required
+                >
+                <option value="" disabled hidden>Select Time Slot</option>
+                {timeSlots.map((slot) => (
+                    <option key={slot} value={slot}>{slot}</option>
+                ))}
+                </select>
+            </div>
+
+            {/* Room Type Selector */}
+            <div className="mb-2 p-2">
+                <label className="block text-md text-customDarkPurple font-semibold mb-2">Select Room Type:</label>
+                <select
+                onChange={(e) => handleRoomChange(e.target.value)}
+                value={selectedRoom}
+                className="border rounded text-black px-3 py-2 w-full"
+                required
+                >
+                <option value="" disabled hidden>Select Room Type</option>
+                <option value="arcade">Arcade Room</option>
+                <option value="console">Console Room</option>
+                <option value="desktop">Desktop Gaming Room</option>
+                </select>
+            </div>
+
+            {/* Booking Confirmation Section */}
+            {selectedDate && selectedRoom && !isModalOpen && (
+                <div className="mb-4">
+                <h1 className="booking-title text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-customPink via-customBlue to-customBlue">Confirm Booking</h1>
+                <p className="mb-4"> <span className='text-customDarkPurple mr-2'>Date:</span>{selectedDate}</p>
+                <p className="mb-4 "><span className='text-customDarkPurple mr-2'>Time Slot:</span> {selectedTimeSlot}</p>
+                <p className="mb-4 "><span className='text-customDarkPurple mr-2'>Room Type:</span> {selectedRoom}</p>
+                {isDateAvailable(selectedDate) ? (
+                    <>
+                    <button
+                        onClick={() => setModalOpen(true)}
+                        className=""
+                    >
+                        Reserve Now
+                    </button>
+                    </>
+                ) : (
+                    <p className="text-red-500">Selected date is not available for booking.</p>
+                )}
+                </div>
+            )}
+            </div>
+
+            {/* Right Column */}
+            <div className="w-1/2 pl-4">
+
+            {/* Room Preview */}
+            {selectedRoom && RoomDetails[selectedRoom] && (
+                <div className="mb-4 border rounded-md">
+                <h1 className="booking-title text-2xl font-bold ml-5 text-transparent bg-clip-text bg-gradient-to-r from-customPink via-customBlue to-customBlue">Room Preview</h1>
+
+                <img
+                    src={RoomDetails[selectedRoom].image}
+                    alt={`${selectedRoom} Room`}
+                    className="w-full h-auto rounded p-5"
+                />
+                <p className="p-4">{RoomDetails[selectedRoom].description}</p>
+                <p className="p-4">{RoomDetails[selectedRoom].price}</p>
+                </div>
+            )}
+            </div>
         </div>
-        </>
-    )
+      </main>
+
+      {isModalOpen && (
+        <ConfirmBookingModal
+          isOpen={isModalOpen}
+          onClose={closeBookingModal}
+          onConfirmBooking={() => {
+            closeBookingModal();
+          }}
+          bookingDetails={{
+            date: selectedDate,
+            time: selectedTimeSlot,
+            roomType: selectedRoom,
+          }}
+        />
+      )}
+    </>
+  );
 }

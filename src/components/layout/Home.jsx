@@ -1,7 +1,8 @@
 import NavBar from "../utilities/NavBar"
 import Background from '../assets/videos/bg-video.mp4'
-import Booking from "../section/Booking"
+import Rooms from "../section/Rooms"
 import Feature from "../section/Feature"
+import Booking from "../section/Booking"
 
 
 export default function Home(){
@@ -23,6 +24,8 @@ export default function Home(){
                     </div>
                     {/*Feature Section*/}
                     <Feature />
+                    {/*Rooms Section*/}
+                    <Rooms />
                     {/*Booking Section*/}
                     <Booking />
                 </section>

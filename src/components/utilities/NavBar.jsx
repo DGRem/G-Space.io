@@ -66,7 +66,7 @@ export default function NavBar () {
 
         const scrollToBooking = (event) => {
             event.preventDefault();
-            const aboutSection = document.getElementById('booking');
+            const aboutSection = document.getElementById('rooms');
             if (aboutSection) {
             aboutSection.scrollIntoView({ behavior: 'smooth' });
             }
@@ -92,7 +92,7 @@ export default function NavBar () {
                     <div className="lg:flex hidden">
                         <ul className="flex items-center lg:space-x-10 ml-[31rem] text-white">
                             <li className="transition-transform transform hover:scale-110"><a href="#about" onClick={scrollToAbout}>About Us</a></li>
-                            <li className="transition-transform transform hover:scale-110"><a href="#booking" onClick={scrollToBooking}>Book Now!</a></li>
+                            <li className="transition-transform transform hover:scale-110"><a href="#rooms" onClick={scrollToBooking}>Rooms</a></li>
                             <li className="transition-transform transform hover:scale-110"><a href="">Contact Us</a></li>
                             <li className="transition-transform transform hover:scale-110"><a href="">FAQ&apos;s</a></li>
                         </ul>
